@@ -13,8 +13,8 @@ use Mix.Config
 # which you typically run after static files are built.
 config :static_data, StaticData.Endpoint,
   http: [port: {:system, "PORT"}],
-  url: [host: "example.com", port: 80],
-  cache_static_manifest: "priv/static/manifest.json"
+  url: [host: "localhost", port: {:system, "PORT"}],
+  server: true
 
 # Do not print debug messages in production
 config :logger, level: :info
