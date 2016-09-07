@@ -1,0 +1,17 @@
+pipeline:
+  build:
+    image: evetools/elixir-build-base:latest
+    environment:
+      MIX_ENV: prod
+    commands:
+      - mix do deps.get, deps.compile
+      - mix release --env=prod
+      - mkdir dist
+      - find rel -name "*.tar.gz" -exec tar -xvzf {} --directory=dist \;
+
+  docker:
+    docker:
+    repo: evetools/static_data
+    tag:
+      - latest
+      - ${DRONE_BRANCH}
