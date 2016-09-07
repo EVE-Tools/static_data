@@ -10,7 +10,6 @@ pipeline:
       - find rel -name "*.tar.gz" -exec tar -xvzf {} --directory=dist \;
 
   docker:
-    docker:
     repo: evetools/static_data
     tag:
       - latest
