@@ -24,7 +24,10 @@ defmodule StaticData.Mixfile do
                     :gettext,
                     :crest,
                     :con_cache,
-                    :httpotion]]
+                    :httpotion,
+                    :cors_plug,
+                    :jiffy,
+                    :exactor]]
   end
 
   # Specifies which paths to compile per environment.
