@@ -21,10 +21,19 @@ defmodule StaticData.LocationController do
   end
 
   defp retrieve_locations(location_ids) do
+    # Dedup array, dispatch async tasks for retrieval, await tasks, augment ID and encode as JSON
+    # TODO: nag CCP about missing ID in location response
     location_ids
     |> Enum.dedup
-    |> Enum.map(fn (location_id) -> Task.async(fn -> get_location(location_id) end) end)
-    |> Enum.map(fn (task) -> Task.await(task) end)
+    |> Enum.map(fn (location_id) ->
+      {location_id, Task.async(fn -> get_location(location_id) end)}
+    end)
+    |> Enum.map(fn ({location_id, task}) ->
+      {location_id, Task.await(task)}
+    end)
+    |> Enum.map(fn({location_id, location}) ->
+      Map.put_new(location, "id", location_id)
+    end)
     |> :jiffy.encode
   end
 
