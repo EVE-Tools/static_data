@@ -1,6 +1,8 @@
 defmodule StaticData.Endpoint do
   use Phoenix.Endpoint, otp_app: :static_data
 
+  plug CORSPlug
+
   socket "/socket", StaticData.UserSocket
 
   # Serve at "/" the static files from "priv/static" directory.
